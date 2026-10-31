@@ -14,7 +14,10 @@ sleep 2
 
 for name in e2e e2e-drums e2e-guitar e2e-games e2e-rotate e2e-notch e2e-install e2e-fit; do
   echo "== $name"
-  node "scripts/$name.mjs" "$out" | grep -E 'FAIL|passed' || true
-  test "${PIPESTATUS[0]}" -eq 0
+  if ! node "scripts/$name.mjs" "$out" > "$out/$name.log" 2>&1; then
+    grep -E 'FAIL|Error' "$out/$name.log" | head -20 || true
+    echo "$name failed. Full log: $out/$name.log"
+    exit 1
+  fi
 done
 echo "All checks passed."

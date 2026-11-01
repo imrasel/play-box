@@ -1,5 +1,6 @@
 import { registerSW } from 'virtual:pwa-register';
 import { getEngine } from './core/audio';
+import { keepAwake } from './core/awake';
 import { h } from './core/dom';
 import { goFullscreen, installButton, isInstalled } from './core/install';
 import { MODULES } from './modules';
@@ -7,6 +8,7 @@ import { trackSafeSpace } from './core/safe-space';
 import './style.css';
 
 trackSafeSpace();
+keepAwake();
 
 // Filling the whole screen slides the page under the browser's own see-through bars, which
 // blur whatever is beneath them. Only the installed app, with no bars, should do that.

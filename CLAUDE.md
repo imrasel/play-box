@@ -54,6 +54,7 @@ To watch a browser check run in a visible Chrome window, which the owner prefers
       style.css        All styles, including safe areas and rotation
       core/
         audio.ts       Shared sound engine; pauses all sound when the app is hidden
+        awake.ts       Keeps the screen on until 3 minutes pass with no touch
         dom.ts         h(): small element builder
         install.ts     Install button, iPhone steps, fullscreen on Android
         rotate.ts      Converts touches on the turned screen back to app coordinates
@@ -105,6 +106,7 @@ Each browser check needs the built app served on port 4199; `npm run check` hand
 | `e2e-notch.mjs` | Home clear of a simulated notch in every module |
 | `e2e-fit.mjs` | Real phone sizes, both ways round, every screen |
 | `e2e-install.mjs` | Install flow and every screen offline |
+| `e2e-awake.mjs` | Screen stays on, and lets go after 3 idle minutes |
 
 Browser checks measure sound by level, so they prove something plays, not that it sounds good. A long run can occasionally report silence that does not repeat. That cause is not yet known: rerun the single script, and treat it as real if it repeats. WebKit on a Mac is not a real iPhone, and neither Android nor iPhone installs are covered, so test those by hand.
 

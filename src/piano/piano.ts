@@ -820,17 +820,11 @@ export function mountPiano(root: HTMLElement, goHome: () => void, openGames = fa
     }
   }
 
-  // Keep the screen on while a child is playing.
-  let wake: WakeLockSentinel | null = null;
-  const stayAwake = async () => {
-    try { wake = await navigator.wakeLock.request('screen'); } catch { /* unsupported */ }
-  };
   const onVisible = () => {
-    if (document.visibilityState === 'visible') { engine.resume(); void stayAwake(); }
+    if (document.visibilityState === 'visible') engine.resume();
     else inst.allOff();
   };
   document.addEventListener('visibilitychange', onVisible);
-  void stayAwake();
 
   const onResize = () => requestAnimationFrame(drawMaps);
   window.addEventListener('resize', onResize);
@@ -852,7 +846,6 @@ export function mountPiano(root: HTMLElement, goHome: () => void, openGames = fa
     timers.forEach(clearTimeout);
     rows.forEach((r) => r.view.destroy());
     inst.allOff();
-    void wake?.release();
     window.removeEventListener('keydown', keydown);
     window.removeEventListener('keyup', keyup);
     window.removeEventListener('resize', onResize);

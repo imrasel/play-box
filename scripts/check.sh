@@ -12,7 +12,7 @@ server=$!
 trap 'kill "$server" 2>/dev/null || true' EXIT
 sleep 2
 
-for name in e2e e2e-drums e2e-guitar e2e-games e2e-rotate e2e-notch e2e-install e2e-fit; do
+for name in e2e e2e-drums e2e-guitar e2e-games e2e-rotate e2e-notch e2e-install e2e-fit e2e-awake; do
   echo "== $name"
   if ! node "scripts/$name.mjs" "$out" > "$out/$name.log" 2>&1; then
     grep -E 'FAIL|Error' "$out/$name.log" | head -20 || true
